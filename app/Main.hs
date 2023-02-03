@@ -1,6 +1,7 @@
 module Main (main) where
 
 import CellularAutomata
+import AutomataUtil
 import Control.Monad
 import System.Exit
 

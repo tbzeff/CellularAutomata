@@ -9,9 +9,9 @@ version:        0.1.0.0
 description:    Please see the README on GitHub at <https://github.com/githubuser/CellularAutomata#readme>
 homepage:       https://github.com/githubuser/CellularAutomata#readme
 bug-reports:    https://github.com/githubuser/CellularAutomata/issues
-author:         Taylor Bleizeffer
-maintainer:     taylorbleizeffer@gmail.com
-copyright:      2023 Taylor Bleizeffer
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2023 Author name here
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
@@ -25,6 +25,7 @@ source-repository head
 
 library
   exposed-modules:
+      AutomataUtil
       CellularAutomata
   other-modules:
       Paths_CellularAutomata
