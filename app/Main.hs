@@ -1,7 +1,7 @@
 module Main (main) where
 
-import CellularAutomata
-import AutomataUtil
+import OneDCA
+import CAUtil
 import Control.Monad
 import System.Exit
 
@@ -24,12 +24,27 @@ mainloop = do
 		4 -> printAllRules
 		_ -> exitSuccess
 
-printAllRules :: IO ()
-printAllRules = do
+printRandom :: Int -> String -> IO ()
+printRandom iters rule = do
+	putStrLn "How long would you like the configuration?"
+	len <- getLine
+	config <- randomConfig (read len)
+	runAutomata iters rule config
+
+printRule :: IO ()
+printRule = do
 	putStrLn ""
-	putStrLn "How many iterations of each rule? "
+	putStrLn "Which rule do you want to write? (Enter a number X where 0 <= X < 255)"
+	rule <- getLine
+	putStrLn "For how many iterations? (Enter a postive interger)"
 	iters <- getLine
-	runAllRules (read iters) 0
+	putStrLn "Please provide a starting configuration (enter line consisting of '1's and spaces, or enter 'default'/press enter, or enter 'random'): "
+	config <- getLine
+	case config of
+		[]		  -> runAutomata (read iters) (toRule $ read rule) defaultConfig
+		"default" -> runAutomata (read iters) (toRule $ read rule) defaultConfig
+		"random"  -> printRandom (read iters) (toRule $ read rule)
+		_ 		  -> runAutomata (read iters) (toRule $ read rule) config
 
 printNRules :: IO ()
 printNRules = do
@@ -39,7 +54,7 @@ printNRules = do
 	putStrLn "How many rules would you like to see? (Enter a number X where 0 <= X < 255"
 	n <- getLine
 	runNRules (read iters) 0 ((read n) - 1)
-	
+
 printRangeRules :: IO ()
 printRangeRules = do 
 	putStrLn ""
@@ -51,16 +66,9 @@ printRangeRules = do
 	end <- getLine
 	runNRules (read iters) (read start) (read end)
 
-printRule :: IO ()
-printRule = do
+printAllRules :: IO ()
+printAllRules = do
 	putStrLn ""
-	putStrLn "Which rule do you want to write? (Enter a number X where 0 <= X < 255)"
-	rule <- getLine
-	putStrLn "For how many iterations? (Enter a postive interger)"
+	putStrLn "How many iterations of each rule? "
 	iters <- getLine
-	putStrLn "Please provide a starting configuration (enter line consisting of '1's and spaces, or enter 'default', or press enter): "
-	config <- getLine
-	case config of
-		[]		  -> runAutomata (read iters) (toRule $ read rule) defaultConfig
-		"default" -> runAutomata (read iters) (toRule $ read rule) defaultConfig
-		_ 		  -> runAutomata (read iters) (toRule $ read rule) config
+	runAllRules (read iters) 0

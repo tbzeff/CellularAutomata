@@ -1,4 +1,4 @@
-module CellularAutomata (
+module OneDCA (
     splitIntoTriples, transform, toRule
 ) where
 
