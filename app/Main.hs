@@ -16,8 +16,8 @@ mainloop = do
 	putStrLn "2. Print all rules up to X."
 	putStrLn "3. Print a range of rules."
 	putStrLn "4. Print all rules. "
-	input <- getLine
-	case (read input) of
+	input <- read <$> getLine
+	case input of
 		1 -> printRule
 		2 -> printNRules
 		3 -> printRangeRules
@@ -27,48 +27,48 @@ mainloop = do
 printRandom :: Int -> String -> IO ()
 printRandom iters rule = do
 	putStrLn "How long would you like the configuration?"
-	len <- getLine
-	config <- randomConfig (read len)
+	len <- read <$> getLine
+	config <- randomConfig len
 	runAutomata iters rule config
 
 printRule :: IO ()
 printRule = do
 	putStrLn ""
 	putStrLn "Which rule do you want to write? (Enter a number X where 0 <= X < 255)"
-	rule <- getLine
+	rule <- read <$> getLine
 	putStrLn "For how many iterations? (Enter a postive interger)"
-	iters <- getLine
+	iters <- read <$> getLine
 	putStrLn "Please provide a starting configuration (enter line consisting of '1's and spaces, or enter 'default'/press enter, or enter 'random'): "
 	config <- getLine
 	case config of
-		[]		  -> runAutomata (read iters) (toRule $ read rule) defaultConfig
-		"default" -> runAutomata (read iters) (toRule $ read rule) defaultConfig
-		"random"  -> printRandom (read iters) (toRule $ read rule)
-		_ 		  -> runAutomata (read iters) (toRule $ read rule) config
+		[]		  -> runAutomata iters (toRule rule) defaultConfig
+		"default" -> runAutomata iters (toRule rule) defaultConfig
+		"random"  -> printRandom iters (toRule rule)
+		_ 		  -> runAutomata iters (toRule rule) config
 
 printNRules :: IO ()
 printNRules = do
 	putStrLn ""
 	putStrLn "How many iterations of each rule? "
-	iters <- getLine
+	iters <- read <$> getLine
 	putStrLn "How many rules would you like to see? (Enter a number X where 0 <= X < 255"
-	n <- getLine
-	runNRules (read iters) 0 ((read n) - 1)
+	n <- read <$> getLine
+	runNRules iters 0 (n - 1)
 
 printRangeRules :: IO ()
 printRangeRules = do 
 	putStrLn ""
 	putStrLn "How many iterations of each rule? "
-	iters <- getLine
+	iters <- read <$> getLine
 	putStrLn "Enter start rule: "
-	start <- getLine
+	start <- read <$> getLine
 	putStrLn "Enter end rule: "
-	end <- getLine
-	runNRules (read iters) (read start) (read end)
+	end <- read <$> getLine
+	runNRules iters start end
 
 printAllRules :: IO ()
 printAllRules = do
 	putStrLn ""
 	putStrLn "How many iterations of each rule? "
-	iters <- getLine
-	runAllRules (read iters) 0
+	iters <- read <$> getLine
+	runAllRules iters 0

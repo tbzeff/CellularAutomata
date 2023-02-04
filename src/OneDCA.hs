@@ -13,13 +13,13 @@ transform "" [] = []
 transform "" _  = []
 transform _ [] = []    
 transform rules (x:xs) | x == "   " = (rule 0) : transform rules xs
-                            | x == "  1" = (rule 1) : transform rules xs
-                            | x == " 1 " = (rule 2) : transform rules xs
-                            | x == " 11" = (rule 3) : transform rules xs
-                            | x == "1  " = (rule 4) : transform rules xs
-                            | x == "1 1" = (rule 5) : transform rules xs
-                            | x == "11 " = (rule 6) : transform rules xs
-                            | x == "111" = (rule 7) : transform rules xs
+                       | x == "  1" = (rule 1) : transform rules xs
+                       | x == " 1 " = (rule 2) : transform rules xs
+                       | x == " 11" = (rule 3) : transform rules xs
+                       | x == "1  " = (rule 4) : transform rules xs
+                       | x == "1 1" = (rule 5) : transform rules xs
+                       | x == "11 " = (rule 6) : transform rules xs
+                       | x == "111" = (rule 7) : transform rules xs
     where rule r = rules !! r
     
 toRule :: Int -> String
