@@ -8,3 +8,4 @@
 *.aux
 *.hp
 *.eventlog
+.vscode
