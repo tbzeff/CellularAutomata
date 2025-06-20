@@ -1,2 +1,10 @@
 .stack-work/
-*~
+/.stack-work/
+*.hi
+*.o
+*.dyn_hi
+*.dyn_o
+*.prof
+*.aux
+*.hp
+*.eventlog
